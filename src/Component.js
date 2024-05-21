@@ -18,6 +18,8 @@ import {
 } from "recharts";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { Button } from "react-bootstrap";
+import "aos/dist/aos.css";
 
 const LightTheme = {
   textColor: "#333",
@@ -54,6 +56,38 @@ function Component() {
     JSON.parse(localStorage.getItem("analytics")) || ""
   );
 
+  console.log(csvData);
+
+  const result = [];
+  csvData.forEach((item) => {
+    const startTime = new Date(item.start_time);
+    const endTime = item.end_time === 0 ? new Date() : new Date(item.end_time);
+
+    result.push({
+      time: startTime,
+      state: item.machine_state,
+      duration: item.duration,
+    });
+
+    if (item.end_time !== 0) {
+      result.push({
+        time: endTime,
+        state: item.machine_state,
+        duration: 0,
+      });
+    }
+  });
+
+  const data1 = [
+    { name: "Jan", uv: 4000, pv: 2400, amt: 2400 },
+    { name: "Feb", uv: 3000, pv: 1398, amt: 2210 },
+    { name: "Mar", uv: 2000, pv: 9800, amt: 2290 },
+    { name: "Apr", uv: 2780, pv: 3908, amt: 2000 },
+    { name: "May", uv: 1890, pv: 4800, amt: 2181 },
+    { name: "Jun", uv: 2390, pv: 3800, amt: 2500 },
+    { name: "Jul", uv: 3490, pv: 4300, amt: 2100 },
+  ];
+
   const downloadVideo = () => {
     fetch(`http://localhost:5000/output_vid/${videoPath}.mp4`)
       .then((response) => response.blob())
@@ -73,11 +107,11 @@ function Component() {
 
   const [data, setData] = useState([
     { name: "Running State", value: 100 - analytics.downtime_percentage },
-    // { name: "Yellow State", value: 16 },
     { name: "Downtime State", value: analytics.downtime_percentage },
   ]);
 
   const [COLORS, setColors] = useState(["#008000", "#FF0000"]);
+
   const renderTableHeaders = () => {
     const headers = Object.keys(csvData[0]);
     return headers.map((header, index) => (
@@ -157,7 +191,14 @@ function Component() {
           {csvData && (
             <div className="csv-table">
               <div className="d-flex justify-content-center mt-2">
-              <button onClick={downloadVideo}>Download Detection Video</button>
+                <Button
+                  className="selector border-0 px-5"
+                  size="lg"
+                  onClick={downloadVideo}
+                >
+                  Download Detection Video
+                </Button>
+                {/* <button onClick={downloadVideo}>Download Detection Video</button> */}
                 {/* <video
                   style={{
                     height: "400px",
@@ -180,7 +221,7 @@ function Component() {
                   <PieChart
                     style={{ marginLeft: "auto", marginRight: "auto" }}
                     width={600}
-                    height={500}
+                    height={400}
                   >
                     <Pie
                       data={data}
@@ -205,7 +246,7 @@ function Component() {
                   <PieChart
                     style={{ marginLeft: "auto", marginRight: "auto" }}
                     width={600}
-                    height={500}
+                    height={400}
                   >
                     <Pie
                       dataKey="value"
@@ -225,6 +266,37 @@ function Component() {
                       ))}
                     </Pie>
                   </PieChart>
+                  <LineChart
+                    data={result}
+                    width={700}
+                    height={400}
+                    style={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginTop: "5rem",
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="time"
+                      tickFormatter={(tick) =>
+                        new Date(tick).toLocaleTimeString()
+                      }
+                    />
+                    <YAxis />
+                    <Tooltip
+                      labelFormatter={(label) =>
+                        new Date(label).toLocaleString()
+                      }
+                    />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="duration"
+                      stroke="#8884d8"
+                      activeDot={{ r: 8 }}
+                    />
+                  </LineChart>
                 </div>
               </div>
               <h2
