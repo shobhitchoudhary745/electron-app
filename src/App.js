@@ -4,7 +4,7 @@ import {
   Form,
   Row,
   Spinner,
-  Button, 
+  Button,
   Container,
   Card,
 } from "react-bootstrap";
@@ -15,6 +15,7 @@ import Header from "./components/Header";
 import FeatureSection from "./components/FeatureSection";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { TbUpload } from "react-icons/tb";
 
 function App() {
   useEffect(() => {
@@ -41,11 +42,11 @@ function App() {
 
       console.log("response jnjdbdhb", response);
       localStorage.setItem("setCsvData", JSON.stringify(response?.data?.data));
+      localStorage.setItem("setVideoPath", response.data.video_name);
       localStorage.setItem(
-        "setVideoPath",
-        response.data.video_name
+        "analytics",
+        JSON.stringify(response.data.statistics)
       );
-      localStorage.setItem("analytics", JSON.stringify(response.data.statistics));
       setLoading(false);
       navigate("/component");
     } catch (error) {
@@ -106,7 +107,7 @@ function App() {
     <div>
       <Header />
 
-      <div className="my-5">
+      {/* <div className="my-5">
         {!videoUrl && (
           <h2
             className="logo-text text-center m-0 display-1"
@@ -195,7 +196,125 @@ function App() {
         </div>
         {!videoUrl && <FeatureSection />}
         <Footer />
+      </div> */}
+
+      <div className="main d-flex justify-content-center gap-1 align-items-center">
+        <div
+          style={{ height: "300px",marginTop:"2rem" }}
+          className="d-flex flex-column justify-content-between align-items-between"
+        >
+          <div>
+            <img src="https://creative-story.s3.amazonaws.com/test/1717586711477-image.png" />
+          </div>
+
+          <div>
+            <img src="https://creative-story.s3.amazonaws.com/test/1717586951787-Card%20Wrapper%20%283%29.png" />
+          </div>
+        </div>
+
+        <div>
+          <div style={{textAlign:"center"}}>
+            <div
+              style={{
+                fontWeight: "600",
+                fontSize: "60px",
+                lineHeight: "64px",
+              }}
+            >
+              AI Powered Machine
+            </div>{" "}
+            <div
+              style={{
+                fontWeight: "600",
+                fontSize: "60px",
+                lineHeight: "64px",
+              }}
+            >
+              Productivity Tracking
+            </div>
+          </div>
+          <div>
+            <p
+              className="ai-text"
+              style={{
+                textAlign: "center",
+                fontWeight: "700",
+                fontSize: "92px",
+                lineHeight: "92px",
+              }}
+            >
+              Ai Solution
+            </p>
+          </div>
+          <div>
+            <div
+              style={{
+                fontWeight: "600",
+                fontSize: "22px",
+                lineHeight: "27px",
+                textAlign: "center",
+                color: "rgba(51, 51, 51, 0.7)",
+              }}
+            >
+              Real-time data identifies inefficiencies, predicts
+            </div>
+            <div
+              style={{
+                fontWeight: "600",
+                fontSize: "22px",
+                lineHeight: "27px",
+                textAlign: "center",
+                color: "rgba(51, 51, 51, 0.7)",
+              }}
+            >
+              maintenance, and boosts performance.
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{ height: "300px",marginTop:"2rem" }}
+          className="d-flex flex-column justify-content-between align-items-between"
+        >
+          <div>
+            <img src="https://creative-story.s3.amazonaws.com/test/1717586782658-image1.png" />
+          </div>
+
+          <div>
+            <img src="https://creative-story.s3.amazonaws.com/test/1717587007524-Card%20Wrapper%20%282%29.png" />
+          </div>
+        </div>
       </div>
+      <div className="d-flex justify-content-center mt-5">
+        <Button
+          className="bg-primary"
+          size="lg"
+          onClick={handleButtonClick}
+          // data-aos="fade-up"
+          // data-aos-duration="500"
+          // data-aos-delay="600"
+        >
+          <TbUpload /> Upload Video
+        </Button>
+        <input
+          id="video-upload"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          type="file"
+          accept="video/*"
+          style={{ display: "none" }}
+        />
+      </div>
+
+      {/* <div className="d-flex justify-content-center gap-1 align-items-center">
+        <div>
+          <img src="https://creative-story.s3.amazonaws.com/test/1717572404922-Symbol.jpg" />
+        </div>
+
+        <div>
+          <img src="https://creative-story.s3.amazonaws.com/test/1717572404922-Symbol.jpg" />
+        </div>
+      </div> */}
     </div>
   );
 }
