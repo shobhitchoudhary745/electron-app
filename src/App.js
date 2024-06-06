@@ -24,10 +24,12 @@ function App() {
 
   const navigate = useNavigate();
   const [csvData, setCsvData] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("video", video);
+    formData.append("video", e.target.files[0]);
 
     setLoading(true);
     try {
@@ -35,7 +37,7 @@ function App() {
         "https://scienda-backend.adaptable.app/upload-video",
         formData
       );
-      // console.log(data, "d");
+      console.log(data, "d");
       const response = await axios.post("http://localhost:5000/upload", {
         video: data?.location,
       });
@@ -80,7 +82,7 @@ function App() {
   };
   const [videoUrl, setVideoUrl] = useState("");
   const [videoPath, setVideoPath] = useState("");
-  const [loading, setLoading] = useState(false);
+  
   const [video, setVideo] = useState("");
 
   const handleFileChange = (e) => {
@@ -200,7 +202,7 @@ function App() {
 
       <div className="main d-flex justify-content-center gap-1 align-items-center">
         <div
-          style={{ height: "300px",marginTop:"2rem" }}
+          style={{ height: "300px", marginTop: "2rem" }}
           className="d-flex flex-column justify-content-between align-items-between"
         >
           <div>
@@ -213,7 +215,7 @@ function App() {
         </div>
 
         <div>
-          <div style={{textAlign:"center"}}>
+          <div style={{ textAlign: "center" }}>
             <div
               style={{
                 fontWeight: "600",
@@ -273,7 +275,7 @@ function App() {
         </div>
 
         <div
-          style={{ height: "300px",marginTop:"2rem" }}
+          style={{ height: "300px", marginTop: "2rem" }}
           className="d-flex flex-column justify-content-between align-items-between"
         >
           <div>
@@ -294,12 +296,18 @@ function App() {
           // data-aos-duration="500"
           // data-aos-delay="600"
         >
-          <TbUpload /> Upload Video
+          {!loading ? (
+            <>
+              <TbUpload /> Upload Video
+            </>
+          ) : (
+            <Spinner size="sm" />
+          )}
         </Button>
         <input
           id="video-upload"
           ref={fileInputRef}
-          onChange={handleFileChange}
+          onChange={submitHandler}
           type="file"
           accept="video/*"
           style={{ display: "none" }}

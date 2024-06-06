@@ -20,6 +20,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Button } from "react-bootstrap";
 import "aos/dist/aos.css";
+import { LuDownload } from "react-icons/lu";
 
 const LightTheme = {
   textColor: "#333",
@@ -28,21 +29,6 @@ const LightTheme = {
   barColor: "#8884d8",
   lineColor: "#8884d8",
 };
-
-const data = [
-  { name: "Jan", uv: 400, pv: 2400, amt: 2400 },
-  { name: "Feb", uv: 300, pv: 1398, amt: 2210 },
-  { name: "Mar", uv: 200, pv: 9800, amt: 2290 },
-  { name: "Apr", uv: 278, pv: 3908, amt: 2000 },
-  { name: "May", uv: 189, pv: 4800, amt: 2181 },
-  { name: "Jun", uv: 239, pv: 3800, amt: 2500 },
-  { name: "Jul", uv: 349, pv: 4300, amt: 2100 },
-  { name: "Aug", uv: 200, pv: 2400, amt: 2400 },
-  { name: "Sep", uv: 300, pv: 1398, amt: 2210 },
-  { name: "Oct", uv: 200, pv: 9800, amt: 2290 },
-  { name: "Nov", uv: 278, pv: 3908, amt: 2000 },
-  { name: "Dec", uv: 189, pv: 4800, amt: 2181 },
-];
 
 function Component() {
   const [csvData, setCsvData] = useState(
@@ -79,13 +65,17 @@ function Component() {
   });
 
   const data1 = [
-    { name: "Jan", uv: 4000, pv: 2400, amt: 2400 },
-    { name: "Feb", uv: 3000, pv: 1398, amt: 2210 },
-    { name: "Mar", uv: 2000, pv: 9800, amt: 2290 },
-    { name: "Apr", uv: 2780, pv: 3908, amt: 2000 },
-    { name: "May", uv: 1890, pv: 4800, amt: 2181 },
-    { name: "Jun", uv: 2390, pv: 3800, amt: 2500 },
-    { name: "Jul", uv: 3490, pv: 4300, amt: 2100 },
+    { name: "Coding", value: 60 },
+    { name: "Testing", value: 40 },
+    { name: "Analysis", value: 30 },
+    { name: "Maintenance", value: 20 },
+  ];
+
+  const data2 = [
+    { name: "Data Processing", value: 46 },
+    { name: "Algorithm Optimization", value: 25 },
+    { name: "System Maintenance", value: 16 },
+    { name: "Recognition", value: 8 },
   ];
 
   const downloadVideo = () => {
@@ -110,18 +100,25 @@ function Component() {
     { name: "Downtime State", value: analytics.downtime_percentage },
   ]);
 
-  const [COLORS, setColors] = useState(["#008000", "#FF0000"]);
+  const [COLORS, setColors] = useState([
+    "#7b61ff",
+    "#ff66b2",
+    "#4292ff",
+    "#c0c0c0",
+  ]);
 
   const renderTableHeaders = () => {
     const headers = Object.keys(csvData[0]);
     return headers.map((header, index) => (
       <th
         style={{
-          border: "1px solid #ddd",
-          paddingTop: "1rem",
-          paddingBottom: "1rem",
+          fontFamily: "Urbanist",
+          fontSize: "16px",
+          fontWeight: "500",
+          lineHeight: "24px",
           textAlign: "center",
-          color: "var(--neutral-color)",
+          backgroundColor: "rgba(0, 123, 255, 1)",
+          color: "rgba(255, 255, 255, 1)",
         }}
         key={index}
       >
@@ -135,14 +132,21 @@ function Component() {
       <tr
         key={rowIndex}
         style={{
-          backgroundColor: rowIndex % 2 === 0 ? "#fff" : "#f9f9f9",
-          color: "var(--neutral-color)",
+          color: "rgba(255,255,255,1)",
+          height: "64px",
         }}
       >
         {Object.values(row).map((value, columnIndex) => (
           <td
             key={columnIndex}
-            style={{ padding: "10px", border: "1px solid #ddd" }}
+            style={{
+              fontFamily: "Urbanist",
+              fontSize: "16px",
+              fontWeight: "600",
+              lineHeight: "21px",
+              textAlign: "center",
+              color: "rgba(51, 51, 51, 1)",
+            }}
           >
             {value}
           </td>
@@ -180,137 +184,169 @@ function Component() {
   }));
 
   // Define colors for each machine state
-  const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const colors = ["#0088FE", "#00C49F", "#FFBB28", "#000000"];
   const lineChartData = prepareLineChartData(csvData);
   return (
     <div>
       <Header />
 
-      <div className="d-flex flex-column body">
+      <div className="d-flex flex-column body mx-5">
         <div className="main-content">
           {csvData && (
-            <div className="csv-table">
-              <div className="d-flex justify-content-center mt-2">
+            <div>
+              <div className="d-flex justify-content-between mt-2">
+                <div
+                  style={{
+                    height: "44px",
+                    fontWeight: "700",
+                    color: "rgba(51, 51, 51, 1)",
+                    fontFamily: "Urbanist",
+                    fontSize: "44px",
+                  }}
+                >
+                  Results
+                </div>
                 <Button
-                  className="selector border-0 px-5"
-                  size="lg"
+                  className="bg-primary border-0"
+                  style={{ width: "256px", height: "60px" }}
                   onClick={downloadVideo}
                 >
-                  Download Detection Video
+                  <LuDownload /> Download Detection Video
                 </Button>
-                {/* <button onClick={downloadVideo}>Download Detection Video</button> */}
-                {/* <video
-                  style={{
-                    height: "400px",
-                    width: "90%",
-                    alignItems: "center",
-                  }}
-                  src={videoPath}
-                  controls
-                /> */}
               </div>
 
-              <div className="mt-4 d-flex justify-content-center flex-wrap">
-                <div className="m-5 text-center" style={{ width: "100%" }}>
-                  <h2
-                    // className="text-center"
-                    style={{ color: "var(--neutral-color)" }}
-                  >
-                    Pie Chart
-                  </h2>
-                  <PieChart
-                    style={{ marginLeft: "auto", marginRight: "auto" }}
-                    width={600}
-                    height={400}
-                  >
-                    <Pie
-                      data={data}
-                      cx={250}
-                      cy={250}
-                      labelLine={false}
-                      label={({ name, percent }) =>
-                        `${name} ${(percent * 100).toFixed(0)}%`
-                      }
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {data.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                  <PieChart
-                    style={{ marginLeft: "auto", marginRight: "auto" }}
-                    width={600}
-                    height={400}
-                  >
-                    <Pie
-                      dataKey="value"
-                      data={chartData}
-                      cx={250}
-                      cy={250}
-                      outerRadius={100}
-                      label={({ name, value }) =>
-                        `${name}: ${value.toFixed(2)} seconds`
-                      }
-                    >
-                      {chartData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={colors[index % colors.length]}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                  <LineChart
-                    data={result}
-                    width={700}
-                    height={400}
+              <div className="d-flex justify-content-between my-4">
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{
+                    // textAlign: "center",
+
+                    width: "49.5%",
+                    height: "480px",
+                    border: "1px solid",
+                    borderRadius: "22px",
+                    borderImageSource:
+                      " linear-gradient(90deg, #FFFFFF -128.27%, rgba(255, 255, 255, 0.02) 188.05%)",
+                    background:
+                      "linear-gradient(90deg, #FFFFFF -128.27%, rgba(255, 255, 255, 0.02) 188.05%)",
+                  }}
+                >
+                  <video
+                    className="my-2"
                     style={{
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      marginTop: "5rem",
+                      width: "98%",
+
+                      maxHeight: "450px",
+                      // border: "1px solid black",
+                      borderRadius: "22px",
                     }}
+                    controls
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      dataKey="time"
-                      tickFormatter={(tick) =>
-                        new Date(tick).toLocaleTimeString()
-                      }
+                    <source
+                      src={localStorage.getItem("setVideoPath")}
+                      type="video/mp4"
                     />
-                    <YAxis />
-                    <Tooltip
-                      labelFormatter={(label) =>
-                        new Date(label).toLocaleString()
-                      }
-                    />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="duration"
-                      stroke="#8884d8"
-                      activeDot={{ r: 8 }}
-                    />
-                  </LineChart>
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{
+                    // textAlign: "center",
+
+                    width: "49.5%",
+                    height: "480px",
+                    border: "1px solid",
+                    borderRadius: "22px",
+                    borderImageSource:
+                      " linear-gradient(90deg, #FFFFFF -128.27%, rgba(255, 255, 255, 0.02) 188.05%)",
+                    background:
+                      "linear-gradient(90deg, #FFFFFF -128.27%, rgba(255, 255, 255, 0.02) 188.05%)",
+                  }}
+                >
+                  <div className="chart-container">
+                    <PieChart width={280} height={280}>
+                      <Pie
+                        data={data1}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label
+                      >
+                        {data1.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      {/* <Legend />  */}
+                    </PieChart>
+                    <div className="details">
+                      {data1.map((item, index) => (
+                        <div key={index}>
+                          <span
+                            className="dot"
+                            style={{
+                              backgroundColor: COLORS[index % COLORS.length],
+                            }}
+                          ></span>
+                          {item.name} - {item.value}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="chart-container">
+                    <PieChart width={280} height={280}>
+                      <Pie
+                        data={data2}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label
+                      >
+                        {data2.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      {/* <Legend /> */}
+                    </PieChart>
+                    <div className="details">
+                      {data2.map((item, index) => (
+                        <div key={index}>
+                          <span
+                            className="dot"
+                            style={{
+                              backgroundColor: COLORS[index % COLORS.length],
+                            }}
+                          ></span>
+                          {item.name} - {item.value}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <h2
-                className="mt-4 text-center "
-                style={{ color: "var(--neutral-color)" }}
-              >
-                Logs
-              </h2>
+
               <table
                 style={{
                   width: "100%",
                 }}
               >
-                <thead>
+                <thead
+                  style={{
+                    height: "44px",
+                  }}
+                >
                   <tr>{renderTableHeaders()}</tr>
                 </thead>
                 <tbody>{renderTableRows()}</tbody>
@@ -318,7 +354,6 @@ function Component() {
             </div>
           )}
         </div>
-        <Footer />
       </div>
     </div>
   );
