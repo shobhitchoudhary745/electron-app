@@ -217,7 +217,7 @@ function Component() {
 
               <div className="d-flex justify-content-between my-4">
                 <div
-                  className="d-flex justify-content-center align-items-center"
+                  className="d-flex justify-content-center "
                   style={{
                     // textAlign: "center",
 
@@ -235,8 +235,8 @@ function Component() {
                     className="my-2"
                     style={{
                       width: "98%",
-
-                      maxHeight: "450px",
+                      zIndex: "999",
+                      height: "420px",
                       // border: "1px solid black",
                       borderRadius: "22px",
                     }}
@@ -252,8 +252,6 @@ function Component() {
                 <div
                   className="d-flex justify-content-center align-items-center"
                   style={{
-                    // textAlign: "center",
-
                     width: "49.5%",
                     height: "480px",
                     border: "1px solid",
@@ -283,7 +281,6 @@ function Component() {
                         ))}
                       </Pie>
                       <Tooltip />
-                      {/* <Legend />  */}
                     </PieChart>
                     <div className="details">
                       {data1.map((item, index) => (
@@ -318,7 +315,6 @@ function Component() {
                         ))}
                       </Pie>
                       <Tooltip />
-                      {/* <Legend /> */}
                     </PieChart>
                     <div className="details">
                       {data2.map((item, index) => (
@@ -340,6 +336,10 @@ function Component() {
               <table
                 style={{
                   width: "100%",
+                  borderCollapse: "separate",
+                  borderSpacing: "0",
+                  borderRadius: "24px",
+                  overflow: "hidden",
                 }}
               >
                 <thead
