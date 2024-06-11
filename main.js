@@ -15,7 +15,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile("./index.html");
-  // mainWindow.setMenu(null);
+  mainWindow.setMenu(null);
 
   // globalShortcut.register("CommandOrControl+Shift+I", () => {});
 
